@@ -3,7 +3,6 @@ import random
 
 def generate_password(p_type, length=0):
 
-
 	# Lists containing characters, numbers and symbols for password creation
 	alpha_arr = [i for i in 'abcdefghijklmnopqrstuvwxyz']
 	nums_arr = [str(i) for i in range(0, 10)]
@@ -44,15 +43,36 @@ def generate_password(p_type, length=0):
 	return "".join(generate_pass)
 
 
-print("Password options:\n (5dig) 5 digit numeric code."
-	  "\n (shortpass) Random password with a length of 8"
-	  "\n (longpass) Random password with a length of 20"
-	  "\n (custom) Random password with a custom length")
+# Create a file for the created passwords
+pass_file = open("password.txt", "a")
+
+
+get_use = input("What is the password for? ")
+account_name = input("What is the username? ")
+
+print("\nPassword options:"
+	  "\n	(5dig) 5 digit numeric code."
+	  "\n	(shortpass) Random password with a length of 8"
+	  "\n	(longpass) Random password with a length of 20"
+	  "\n	(custom) Random password with a custom length")
+
 
 user_input = input("\nEnter option: ")
+info = "\n		" + str(get_use).title() + "\nAccount username:	" + str(account_name) + "\nPassword:			"
 
 if user_input == "custom":
+
 	user_input2 = input("Enter length: ")
-	print("\n" + generate_password(user_input, int(user_input2)))
+	generated_pass = generate_password(user_input.lower(), int(user_input2))
+	output = info + generated_pass
+
+	print(output)
+	pass_file.write(output)
 else:
-	print("\n" + generate_password(user_input))
+	generated_pass = generate_password(user_input.lower())
+	output = info + generated_pass
+
+	print(output)
+	pass_file.write(output)
+
+pass_file.write("\n-----------------------------------------")
